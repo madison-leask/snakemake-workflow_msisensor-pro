@@ -5,7 +5,7 @@
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro)
 
-A Snakemake workflow for `for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.`
+A Snakemake workflow for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.
 
 - [Snakemake workflow: `microsatellite-instability-detection-with-msisensor-pro`](#snakemake-workflow-name)
   - [Usage](#usage)
@@ -19,7 +19,11 @@ The usage of this workflow is described in the [Snakemake Workflow Catalog](http
 
 Detailed information about input data and workflow configuration can also be found in the [`config/README.md`](config/README.md).
 
-If you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this repository or its DOI.
+If you use this workflow in a paper, don't forget to give credits to the authors of this workflow and the tools it uses by citing:
+1. The URL of this repository or its DOI.
+2. The papers listed under [References](#references).
+Please also note that the main tool used here, `msisensor-pro`, is only `free for non-commercial use by academic, government, and non-profit/not-for-profit institutionsfree to use by`.
+For details and contact information for commercial licensing, see the [`msisensor-pro` license](https://github.com/xjtu-omics/msisensor-pro?tab=License-1-ov-file#readme).
 
 ## Deployment options
 
