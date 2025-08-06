@@ -1,22 +1,21 @@
-# Snakemake workflow: `<name>`
+# Snakemake workflow: `microsatellite-instability-detection-with-msisensor-pro`
 
-[![Snakemake](https://img.shields.io/badge/snakemake-≥8.0.0-brightgreen.svg)](https://snakemake.github.io)
-[![GitHub actions status](https://github.com/<owner>/<repo>/workflows/Tests/badge.svg?branch=main)](https://github.com/<owner>/<repo>/actions?query=branch%3Amain+workflow%3ATests)
+[![Snakemake](https://img.shields.io/badge/snakemake-≥9.0.0-brightgreen.svg)](https://snakemake.github.io)
+[![GitHub actions status](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/workflows/Tests/badge.svg?branch=main)](https://github.com/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro/actions?query=branch%3Amain+workflow%3ATests)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
-[![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/<owner>/<repo>)
+[![workflow catalog](https://img.shields.io/badge/Snakemake%20workflow%20catalog-darkgreen)](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro)
 
-A Snakemake workflow for `<description>`
+A Snakemake workflow for `for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.`
 
-- [Snakemake workflow: `<name>`](#snakemake-workflow-name)
+- [Snakemake workflow: `microsatellite-instability-detection-with-msisensor-pro`](#snakemake-workflow-name)
   - [Usage](#usage)
   - [Deployment options](#deployment-options)
   - [Authors](#authors)
   - [References](#references)
-  - [TODO](#todo)
 
 ## Usage
 
-The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/<owner>/<repo>).
+The usage of this workflow is described in the [Snakemake Workflow Catalog](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/microsatellite-instability-detection-with-msisensor-pro).
 
 Detailed information about input data and workflow configuration can also be found in the [`config/README.md`](config/README.md).
 
@@ -43,29 +42,18 @@ To run the workflow with test files using **conda**:
 snakemake --cores 2 --sdm conda --directory .test
 ```
 
-To run the workflow with **apptainer** / **singularity**, add a link to a container registry in the `Snakefile`, for example `container: "oras://ghcr.io/<user>/<repository>:<version>"` for Github's container registry.
-Run the workflow with:
-
-```bash
-snakemake --cores 2 --sdm conda apptainer --directory .test
-```
-
 ## Authors
 
-- Firstname Lastname
-  - Affiliation
-  - ORCID profile
-  - home page
+- David Lähnemann
+  - German Cancer Consortium (DKTK), partner site Essen-Düsseldorf, A partnership between DKFZ and University Hospital Essen
+  - https://orcid.org/0000-0002-9138-4112
 
 ## References
+
+> Peng Jia, Xiaofei Yang, Li Guo, Bowen Liu, Jiadong Lin, Hao Liang, Jianyong Sun, Chengsheng Zhang, Kai Ye, MSIsensor-Pro: Fast, Accurate, and Matched-Normal-Sample-Free Detection of Microsatellite Instability, Genomics, Proteomics & Bioinformatics, Volume 18, Issue 1, February 2020, Pages 65–71, https://doi.org/10.1016/j.gpb.2020.02.001
 
 > Köster, J., Mölder, F., Jablonski, K. P., Letcher, B., Hall, M. B., Tomkins-Tinch, C. H., Sochat, V., Forster, J., Lee, S., Twardziok, S. O., Kanitz, A., Wilm, A., Holtgrewe, M., Rahmann, S., & Nahnsen, S. _Sustainable data analysis with Snakemake_. F1000Research, 10:33, 10, 33, **2021**. https://doi.org/10.12688/f1000research.29032.2.
 
 ## TODO
 
-- Replace `<owner>` and `<repo>` everywhere in the template with the correct user name/organization, and the repository name. The workflow will be automatically added to the [snakemake workflow catalog](https://snakemake.github.io/snakemake-workflow-catalog/index.html) once it is publicly available on Github.
-- Replace `<name>` with the workflow name (can be the same as `<repo>`).
-- Replace `<description>` with a description of what the workflow does.
-- Update the [deployment](#deployment-options), [authors](#authors) and [references](#references) sections.
-- Update the `README.md` badges. Add or remove badges for `conda`/`singularity`/`apptainer` usage depending on the workflow's [deployment](#deployment-options) options.
 - Do not forget to also adjust the configuration-specific `config/README.md` file.
