@@ -4,22 +4,14 @@ properties:
   sample:
     type: string
     description: sample name/identifier
-  condition:
+  alias:
     type: string
-    description: sample condition that will be compared during differential analysis
-  replicate:
-    type: integer
-    default: 1
-    description: consecutive numbers representing multiple replicates of one condition
-  read1:
+    description: type of sample (for example 'tumor', 'metastasis', 'normal'); values used here need to match up with the configuration in the config/config.yaml file
+  group:
     type: string
-    description: names of fastq.gz files, read 1
-  read2:
-    type: string
-    description: names of fastq.gz files, read 2 (optional)
+    description: grouping of samples, usually some kind of ID of a patient or individual (this groups together multiple samples with differing aliases)
 
 required:
   - sample
-  - condition
-  - replicate
-  - read1
+  - alias
+  - group

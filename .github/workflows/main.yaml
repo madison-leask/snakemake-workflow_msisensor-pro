@@ -41,16 +41,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Test workflow
+      - name: Test panel_of_normals workflow
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test
-          snakefile: workflow/Snakefile
-          args: "--sdm conda --show-failed-logs --cores 2 --conda-cleanup-pkgs cache --all-temp"
+          directory: .test/panel_of_normals
+          snakefile: .test/panel_of_normals/Snakefile
+          args: "--sdm conda --show-failed-logs --cores 2 --conda-cleanup-pkgs cache"
 
       - name: Test report
         uses: snakemake/snakemake-github-action@v2
         with:
-          directory: .test
-          snakefile: workflow/Snakefile
+          directory: .test/panel_of_normals
+          snakefile: .test/panel_of_normals/Snakefile
           args: "--report report.zip"

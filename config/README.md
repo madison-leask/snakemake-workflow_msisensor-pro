@@ -1,6 +1,6 @@
 ## Workflow overview
 
-This workflow is a best-practice workflow for `<detailed description>`.
+This workflow is a best-practice workflow for microsatellite instability (MSI) detection with msisensor-pro, following best practices for standardized workflows.
 The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stable/) and consists of the following steps:
 
 1. Download genome reference from NCBI
@@ -9,30 +9,47 @@ The workflow is built using [snakemake](https://snakemake.readthedocs.io/en/stab
 4. Check quality of input read data (`FastQC`)
 5. Collect statistics from tool output (`MultiQC`)
 
-## Running the workflow
+## Workflow setup
+
+Setting up this workflow requires three steps:
+1. Create [a sample sheet as described below](#sample-sheet).
+2. Ensure that input SAM/BAM/CRAM files exist with the given file name pattern.
+3. Go through the `config/config.yaml` file adjusting all configurations as outlined in the extensive comments.
+
+### Sample sheet
+
+The sample sheet has the following layout:
+
+| sample  | alias     | group     |
+| ------- | --------- | --------- |
+| sample1 | tumor     | patient_A |
+| sample2 | normal    | patient_A |
+| sample3 | tumor     | patient_B |
+| sample4 | normal    | patient_B |
+
+This follows the same naming scheme that a number of other standardized snakemake workflows for DNA sequencing data also follow, for example the [`dna-seq-varlociraptor` workflow](https://snakemake.github.io/snakemake-workflow-catalog/docs/workflows/snakemake-workflows/dna-seq-varlociraptor.html#sample-sheet).
 
 ### Input data
 
-This template workflow creates artificial sequencing data in `*.fastq.gz` format.
-It does not contain actual input data.
-The simulated input files are nevertheless created based on a mandatory table linked in the `config.yaml` file (default: `.test/samples.tsv`).
-The sample sheet has the following layout:
+This workflow assumes that you have already mapped / aligned your read data to the reference genome that you specify in the `config/config.yaml` file, and performed quality score recalibration on them.
+So it starts from SAM/BAM/CRAM files, and assumes that these follow this file path and naming scheme (where `{sample}` are entries from the `sample` column in your sample sheet):
 
-| sample  | condition | replicate | read1                      | read2                      |
-| ------- | --------- | --------- | -------------------------- | -------------------------- |
-| sample1 | wild_type | 1         | sample1.bwa.read1.fastq.gz | sample1.bwa.read2.fastq.gz |
-| sample2 | wild_type | 2         | sample2.bwa.read1.fastq.gz | sample2.bwa.read2.fastq.gz |
+```{bash}
+results/recal/{sample}.bam
+```
 
-### Parameters
+If your input files do not follow this scheme, we suggest that you add a `rule` that creates symbolic links with the correct `{sample}.bam` naming scheme in the subfolder `results/recal/`.
+This could for example look like this:
 
-This table lists all parameters that can be used to run the workflow.
-
-| parameter          | type | details                               | default                        |
-| ------------------ | ---- | ------------------------------------- | ------------------------------ |
-| **samplesheet**    |      |                                       |                                |
-| path               | str  | path to samplesheet, mandatory        | "config/samples.tsv"           |
-| **get_genome**     |      |                                       |                                |
-| ncbi_ftp           | str  | link to a genome on NCBI's FTP server | link to _S. cerevisiae_ genome |
-| **simulate_reads** |      |                                       |                                |
-| read_length        | num  | length of target reads in bp          | 100                            |
-| read_number        | num  | number of total reads to be simulated | 10000                          |
+```
+rule link_input_data:
+    input:
+        original="../../path/to/other/workflow/results/mapped_and_recalibrated/{sample}",
+    output:
+        compliant="results/recal/{sample}.bam,
+    log:
+        "logs/link_input_data/{sample}.log",
+    shell:
+        "( ln --symbolic {input.original} {output.compliant} "
+        ") >{log} 2>&1 "
+```

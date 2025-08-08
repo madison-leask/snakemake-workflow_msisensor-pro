@@ -1,0 +1,7 @@
+name: get_genome
+channels:
+  - conda-forge
+  - bioconda
+  - nodefaults
+dependencies:
+  - msisensor-pro =1.3

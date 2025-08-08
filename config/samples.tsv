@@ -1,0 +1,5 @@
+sample	alias	group
+sample1	tumor	individual_1
+sample2	matched_normal	individual_1
+sample3	tumor	individual_2
+sample4	matched_normal	individual_2

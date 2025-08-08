@@ -1,29 +1,40 @@
 $schema: "https://json-schema.org/draft/2020-12/schema"
 description: main configuration schema for the workflow
 properties:
-  samplesheet:
+  sample_sheet:
     type: string
     description: path to sample-sheet TSV file
 
-  get_genome:
+  aliases:
     type: object
     properties:
-      ncbi_ftp:
+      tumor:
         type: string
-        description: URL for genome retrieval
-    required: ["ncbi_ftp"]
+        description: Alias used for a tumor sample in the sample sheet (see `alias` column).
+      normal:
+        type: string
+        description: (optional) Alias used for a normal sample in the sample sheet (see `alias` column). If a normal alias is provided, the workflow will run in tumor-normal mode. Alternatively, provide a baseline alias.
+      baseline:
+        type: string
+        description: (optional) Alias used for a baseline samples in the sample sheet (see `alias` column). If a baseline alias is provided, the workflow will run in tumor-only mode. Alternatively, provide a normal alias.
+    required:
+      - tumor
 
-  simulate_reads:
+  ref:
     type: object
     properties:
-      read_length:
-        type: number
-        description: length of target reads in bp
-      read_number:
-        type: number
-        description: number of total reads to be simulated
+      species:
+        type: string
+      release:
+        type: integer
+      build:
+        type: string
+    required:
+      - species
+      - release
+      - build
 
 required:
-  - samplesheet
-  - get_genome
-  - simulate_reads
+  - sample_sheet
+  - aliases
+  - ref

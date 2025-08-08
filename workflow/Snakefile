@@ -12,7 +12,11 @@ configfile: "config/config.yaml"
 # load rules
 # -----------------------------------------------------
 include: "rules/common.smk"
-include: "rules/process_reads.smk"
+include: "rules/utils.smk"
+include: "rules/reference.smk"
+include: "rules/msisensor_pro_tumor_only.smk"
+#include: "rules/msisensor_pro_tumor_normal.smk"
+include: "rules/results.smk"
 
 
 # optional messages, log and error handling
@@ -33,5 +37,5 @@ onerror:
 # -----------------------------------------------------
 rule all:
     input:
-        "results/multiqc/multiqc_report.html",
+        get_final_output,
     default_target: True

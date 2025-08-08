@@ -1,0 +1,6 @@
+name: get_genome
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - r-tidyverse =2.0
