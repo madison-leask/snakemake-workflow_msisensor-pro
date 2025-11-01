@@ -28,21 +28,41 @@ for notebook in "$NOTEBOOK_DIR"/*.ipynb; do
         echo "---"
         
         # Check JSON structure
-        if ! python3 -c "import json; f = open('$notebook'); _ = json.load(f); f.close()" 2>/dev/null; then
+        if ! python3 -c "
+import json
+try:
+    with open('$notebook') as f:
+        json.load(f)
+except Exception:
+    exit(1)
+" 2>/dev/null; then
             echo "  ✗ Invalid JSON structure"
             exit 1
         else
             echo "  ✓ Valid JSON structure"
         fi
         
-        # Check for cells
-        CELL_COUNT=$(python3 -c "
+        # Check for cells and structure
+        VALIDATION=$(python3 -c "
 import json
-with open('$notebook') as f:
-    data = json.load(f)
-    print(len(data['cells']))
-")
-        echo "  ✓ Contains $CELL_COUNT cells"
+import sys
+try:
+    with open('$notebook') as f:
+        data = json.load(f)
+        if 'cells' not in data:
+            print('Error: Missing cells key', file=sys.stderr)
+            sys.exit(1)
+        print(len(data['cells']))
+except Exception as e:
+    print(f'Error: {e}', file=sys.stderr)
+    sys.exit(1)
+" 2>&1)
+        
+        if [ $? -ne 0 ]; then
+            echo "  ✗ Invalid notebook structure: $VALIDATION"
+            exit 1
+        fi
+        echo "  ✓ Contains $VALIDATION cells"
         
         # Check for preamble import
         if grep -q "from project_utils.notebookpreamble import" "$notebook"; then

@@ -204,6 +204,13 @@ def load_msi_results(results_file):
     -------
     pd.DataFrame
         MSI results as a pandas DataFrame
+    
+    Raises
+    ------
+    FileNotFoundError
+        If the results file does not exist
+    ValueError
+        If the file is missing required columns
     """
     results_file = Path(results_file)
     
@@ -211,6 +218,17 @@ def load_msi_results(results_file):
         raise FileNotFoundError(f"Results file not found: {results_file}")
     
     df = pd.read_csv(results_file, sep='\t')
+    
+    # Validate required columns
+    required_columns = ['group', 'msi_score', 'n_all_sites', 'n_unstable_sites']
+    missing_columns = [col for col in required_columns if col not in df.columns]
+    
+    if missing_columns:
+        raise ValueError(
+            f"MSI results file is missing required columns: {missing_columns}. "
+            f"Found columns: {list(df.columns)}"
+        )
+    
     return df
 
 
