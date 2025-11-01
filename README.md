@@ -46,6 +46,36 @@ To run the workflow with test files using **conda**:
 snakemake --cores 2 --sdm conda --directory .test
 ```
 
+## Analysis Notebooks
+
+This workflow includes Jupyter notebooks for downstream analysis and visualization of MSI results. The notebooks are located in `workflow/notebooks/` and use a standardized preamble for consistency.
+
+### Available Notebooks
+
+1. **MSI Analysis** (`workflow/notebooks/msi_analysis.ipynb`)
+   - Comprehensive MSI result analysis and visualization
+   - MSI status classification (MSI-High, MSI-Low, MSS)
+   - Summary statistics and publication-quality plots
+
+2. **Combined TMB/MSI Analysis** (`workflow/notebooks/tmb_msi_combined_analysis.ipynb`)
+   - Joint analysis of MSI and Tumor Mutational Burden (TMB)
+   - Immunotherapy response prediction
+   - Note: Currently uses simulated TMB data; real TMB requires variant calling integration
+
+### Running the Notebooks
+
+```bash
+# Install notebook dependencies
+conda env create -f workflow/envs/notebooks.yaml
+conda activate msisensor-notebooks
+
+# Start Jupyter
+cd workflow/notebooks
+jupyter notebook
+```
+
+For detailed documentation, see [`workflow/notebooks/README.md`](workflow/notebooks/README.md).
+
 ## Authors
 
 - David Lähnemann
@@ -60,6 +90,7 @@ snakemake --cores 2 --sdm conda --directory .test
 
 > Mölder F, Jablonski KP, Letcher B et al. Sustainable data analysis with Snakemake [version 3; peer review: 2 approved]. F1000Research 2025, 10:33 https://doi.org/10.12688/f1000research.29032.3
 
-## TODO
+## Future Enhancements
 
-- Do not forget to also adjust the configuration-specific `config/README.md` file.
+- Integration of variant calling for TMB (Tumor Mutational Burden) calculation
+- Additional biomarker analysis notebooks as needed
