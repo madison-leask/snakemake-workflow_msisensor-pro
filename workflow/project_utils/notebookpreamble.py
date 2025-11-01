@@ -47,7 +47,7 @@ try:
         ipython.magic('load_ext autoreload')
         ipython.magic('autoreload 2')
         ipython.magic('matplotlib inline')
-except:
+except (ImportError, AttributeError):
     pass
 
 
@@ -114,6 +114,50 @@ def load_config(config_path=None):
         config = yaml.safe_load(f)
     
     return config
+
+
+def get_workflow_mode(config=None):
+    """
+    Determine workflow mode (tumor_only or tumor_normal) from config.
+    
+    Parameters
+    ----------
+    config : dict, optional
+        Configuration dictionary. If None, loads from default location.
+    
+    Returns
+    -------
+    str
+        Workflow mode: 'tumor_only' or 'tumor_normal'
+    """
+    if config is None:
+        config = load_config()
+    
+    return 'tumor_only' if 'baseline' in config.get('aliases', {}) else 'tumor_normal'
+
+
+def get_genome_version(config=None):
+    """
+    Get genome version string from config.
+    
+    Parameters
+    ----------
+    config : dict, optional
+        Configuration dictionary. If None, loads from default location.
+    
+    Returns
+    -------
+    str
+        Genome version string in format: genome.dna.{species}.{build}.{release}
+    """
+    if config is None:
+        config = load_config()
+    
+    species = config['ref']['species']
+    build = config['ref']['build']
+    release = config['ref']['release']
+    
+    return f"genome.dna.{species}.{build}.{release}"
 
 
 def load_samples(samples_path=None):
@@ -291,6 +335,7 @@ def summary_statistics(msi_data, score_col='msi_score'):
 __all__ = [
     'pd', 'np', 'plt', 'sns',
     'setup_paths', 'load_config', 'load_samples',
+    'get_workflow_mode', 'get_genome_version',
     'load_msi_results', 'classify_msi_status',
     'plot_msi_distribution', 'summary_statistics',
     'Path', 'sys', 'warnings'

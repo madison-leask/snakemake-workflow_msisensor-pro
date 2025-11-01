@@ -139,8 +139,9 @@ def calculate_tmb(vcf_file, callable_mb, output_file):
     tmb = mutation_count / callable_mb
     
     with open(output_file, 'w') as f:
-        f.write(f"sample\\ttotal_mutations\\tcallable_mb\\ttmb\\n")
-        f.write(f"{Path(vcf_file).stem}\\t{mutation_count}\\t{callable_mb}\\t{tmb:.2f}\\n")
+        f.write("sample\ttotal_mutations\tcallable_mb\ttmb\n")
+        sample_name = Path(vcf_file).stem
+        f.write(f"{sample_name}\t{mutation_count}\t{callable_mb}\t{tmb:.2f}\n")
     
     return tmb
 

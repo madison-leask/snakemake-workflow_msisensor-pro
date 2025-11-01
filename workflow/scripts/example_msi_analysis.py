@@ -17,7 +17,8 @@ sys.path.insert(0, str(workflow_dir))
 from project_utils.notebookpreamble import (
     pd, np, plt,
     setup_paths, load_config, load_samples, load_msi_results,
-    classify_msi_status, summary_statistics
+    classify_msi_status, summary_statistics,
+    get_workflow_mode, get_genome_version
 )
 
 
@@ -55,11 +56,8 @@ def main():
         return 1
     
     # Try to load MSI results
-    workflow_mode = 'tumor_only' if 'baseline' in config.get('aliases', {}) else 'tumor_normal'
-    species = config['ref']['species']
-    build = config['ref']['build']
-    release = config['ref']['release']
-    genome_version = f"genome.dna.{species}.{build}.{release}"
+    workflow_mode = get_workflow_mode(config)
+    genome_version = get_genome_version(config)
     
     results_file = paths['results'] / f"{workflow_mode}.{genome_version}.all_samples.tsv"
     
