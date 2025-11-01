@@ -20,7 +20,7 @@ from project_utils.notebookpreamble import (
     pd, np, plt,
     setup_paths, load_config, load_samples, load_msi_results,
     classify_msi_status, summary_statistics,
-    get_workflow_mode, get_genome_version
+    get_msi_results_path
 )
 
 
@@ -57,11 +57,8 @@ def main():
         print(f"\nWarning: Could not load samples: {e}")
         return 1
     
-    # Try to load MSI results
-    workflow_mode = get_workflow_mode(config)
-    genome_version = get_genome_version(config)
-    
-    results_file = paths['results'] / f"{workflow_mode}.{genome_version}.all_samples.tsv"
+    # Try to load MSI results using the helper function
+    results_file = get_msi_results_path(config=config)
     
     if results_file.exists():
         print(f"\nLoading MSI results from: {results_file}")

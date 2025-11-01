@@ -166,6 +166,34 @@ def get_genome_version(config=None):
     return f"genome.dna.{species}.{build}.{release}"
 
 
+def get_msi_results_path(workflow_mode=None, genome_version=None, config=None):
+    """
+    Get the path to the MSI results file.
+    
+    Parameters
+    ----------
+    workflow_mode : str, optional
+        Workflow mode ('tumor_only' or 'tumor_normal'). If None, determined from config.
+    genome_version : str, optional
+        Genome version string. If None, determined from config.
+    config : dict, optional
+        Configuration dictionary. If None, loads from default location.
+    
+    Returns
+    -------
+    Path
+        Path to the MSI results file
+    """
+    if workflow_mode is None:
+        workflow_mode = get_workflow_mode(config)
+    
+    if genome_version is None:
+        genome_version = get_genome_version(config)
+    
+    paths = setup_paths()
+    return paths['results'] / f"{workflow_mode}.{genome_version}.all_samples.tsv"
+
+
 def load_samples(samples_path=None):
     """
     Load sample sheet.
@@ -251,7 +279,13 @@ def classify_msi_status(msi_score, threshold_high=0.2, threshold_low=0.0):
         MSI status: 'MSI-High', 'MSI-Low', or 'MSS'
     """
     if isinstance(msi_score, (pd.Series, np.ndarray)):
-        status = pd.Series(['MSS'] * len(msi_score), index=getattr(msi_score, 'index', None))
+        # Get the index for pandas Series, or create one for numpy arrays
+        if isinstance(msi_score, pd.Series):
+            index = msi_score.index
+        else:
+            index = range(len(msi_score))
+        
+        status = pd.Series(['MSS'] * len(msi_score), index=index)
         status[msi_score > threshold_low] = 'MSI-Low'
         status[msi_score > threshold_high] = 'MSI-High'
         return status
@@ -359,7 +393,7 @@ def summary_statistics(msi_data, score_col='msi_score'):
 __all__ = [
     'pd', 'np', 'plt', 'sns',
     'setup_paths', 'load_config', 'load_samples',
-    'get_workflow_mode', 'get_genome_version',
+    'get_workflow_mode', 'get_genome_version', 'get_msi_results_path',
     'load_msi_results', 'classify_msi_status',
     'plot_msi_distribution', 'summary_statistics',
     'Path', 'sys', 'warnings'

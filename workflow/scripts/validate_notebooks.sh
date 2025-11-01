@@ -33,7 +33,7 @@ import json
 try:
     with open('$notebook') as f:
         json.load(f)
-except Exception:
+except (json.JSONDecodeError, FileNotFoundError, IOError) as e:
     exit(1)
 " 2>/dev/null; then
             echo "  ✗ Invalid JSON structure"
@@ -53,8 +53,14 @@ try:
             print('Error: Missing cells key', file=sys.stderr)
             sys.exit(1)
         print(len(data['cells']))
-except Exception as e:
-    print(f'Error: {e}', file=sys.stderr)
+except json.JSONDecodeError as e:
+    print(f'Error: Invalid JSON - {e}', file=sys.stderr)
+    sys.exit(1)
+except FileNotFoundError:
+    print('Error: File not found', file=sys.stderr)
+    sys.exit(1)
+except KeyError as e:
+    print(f'Error: Missing key - {e}', file=sys.stderr)
     sys.exit(1)
 " 2>&1)
         
