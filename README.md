@@ -76,6 +76,16 @@ jupyter notebook
 
 For detailed documentation, see [`workflow/notebooks/README.md`](workflow/notebooks/README.md).
 
+### TMB (Tumor Mutational Burden) Integration
+
+The combined TMB/MSI analysis notebook is included but currently uses simulated TMB data for demonstration. To add real TMB calculation to the workflow, see the comprehensive integration guide: [`docs/TMB_INTEGRATION.md`](docs/TMB_INTEGRATION.md).
+
+TMB calculation requires variant calling (not currently part of this workflow). The integration guide provides:
+- Step-by-step implementation instructions
+- Example Snakemake rules for variant calling
+- Configuration options
+- Best practices for TMB calculation
+
 ## Authors
 
 - David Lähnemann
