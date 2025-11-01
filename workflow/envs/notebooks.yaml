@@ -1,0 +1,18 @@
+name: msisensor-notebooks
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.9
+  - jupyter
+  - notebook
+  - pandas>=1.3
+  - numpy>=1.21
+  # Compatible matplotlib and seaborn versions for modern plotting styles
+  # These versions work together and support the styles used in the preamble
+  - matplotlib>=3.4,<3.10
+  - seaborn>=0.12,<0.14
+  - pyyaml>=5.4
+  - scipy>=1.7
+  - ipython
