@@ -91,6 +91,7 @@ TMB calculation requires variant calling (not currently part of this workflow). 
 - David Lähnemann
   - German Cancer Consortium (DKTK), partner site Essen-Düsseldorf, A partnership between DKFZ and University Hospital Essen
   - https://orcid.org/0000-0002-9138-4112
+- Madison Leask (adapted workflow to fit extended NGS analysis, including integration of TMB)
 
 ## References
 
