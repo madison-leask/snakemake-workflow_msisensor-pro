@@ -13,7 +13,9 @@ from pathlib import Path
 workflow_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(workflow_dir))
 
-# Import the preamble functions (but not the IPython-specific parts)
+# Import required utilities from the preamble
+# Note: For CLI scripts, we import specific functions rather than using 'import *'
+# to maintain clarity and avoid importing IPython-specific functionality
 from project_utils.notebookpreamble import (
     pd, np, plt,
     setup_paths, load_config, load_samples, load_msi_results,

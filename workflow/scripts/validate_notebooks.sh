@@ -28,7 +28,7 @@ for notebook in "$NOTEBOOK_DIR"/*.ipynb; do
         echo "---"
         
         # Check JSON structure
-        if ! python3 -c "import json; f=open('$notebook'); json.load(f); f.close()" 2>/dev/null; then
+        if ! python3 -c "import json; f = open('$notebook'); _ = json.load(f); f.close()" 2>/dev/null; then
             echo "  ✗ Invalid JSON structure"
             exit 1
         else
@@ -36,7 +36,12 @@ for notebook in "$NOTEBOOK_DIR"/*.ipynb; do
         fi
         
         # Check for cells
-        CELL_COUNT=$(python3 -c "import json; f=open('$notebook'); data=json.load(f); f.close(); print(len(data['cells']))")
+        CELL_COUNT=$(python3 -c "
+import json
+with open('$notebook') as f:
+    data = json.load(f)
+    print(len(data['cells']))
+")
         echo "  ✓ Contains $CELL_COUNT cells"
         
         # Check for preamble import

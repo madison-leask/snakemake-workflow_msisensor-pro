@@ -120,6 +120,10 @@ def get_workflow_mode(config=None):
     """
     Determine workflow mode (tumor_only or tumor_normal) from config.
     
+    The workflow mode is determined by which alias is configured:
+    - If 'baseline' alias is present: tumor_only mode (uses panel of normals)
+    - If 'matched_normal' alias is present: tumor_normal mode (uses matched normals)
+    
     Parameters
     ----------
     config : dict, optional
@@ -133,6 +137,8 @@ def get_workflow_mode(config=None):
     if config is None:
         config = load_config()
     
+    # Check for baseline (panel of normals) -> tumor_only mode
+    # Otherwise assume tumor_normal mode with matched normals
     return 'tumor_only' if 'baseline' in config.get('aliases', {}) else 'tumor_normal'
 
 
